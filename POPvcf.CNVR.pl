@@ -57,13 +57,13 @@ for($vcf_index=0;$vcf_index<@vcf_list;$vcf_index++){
 		$string=~ s/^/;/;
 		$string=~ s/(.*;END=)([0-9]{3,9})(;.*)/$2/;
 	}
-	foreach $string (@array_svtype){
-		$string=~ s/DEL/-1/;
-		$string=~ s/DUP/1/;
-		$string=~ s/CNV/+-1/;
-		$string=~ s/INS/i1/;
-		$string=~ s/INV/0/;
-	}
+	#foreach $string (@array_svtype){
+	#	$string=~ s/DEL/-1/;
+	#	$string=~ s/DUP/1/;
+	#	$string=~ s/CNV/+-1/;
+	#	$string=~ s/INS/i1/;
+	#	$string=~ s/INV/0/;
+	#}
 	#遍历samples_chr
 	for($array_index=0;$array_index<@array_chr;$array_index++){
 		if(@array_chr[$array_index] ne ${chr}){
