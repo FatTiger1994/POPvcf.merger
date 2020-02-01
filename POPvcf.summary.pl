@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 use strict;
 
+my @BBchr;
 my @BBstart;
 my @BBend;
 my @BBsvtype;
@@ -9,7 +10,7 @@ my @SSstart;
 my @SSend;
 my @SSsvtype;
 my %hash;
-my $filter=0.5
+my $filter=0.5;
 
 open(INFILE,"$ARGV[0]"); #bigblock
 while(<INFILE>){
@@ -53,39 +54,39 @@ for(my $j=0;$j<@BBstart;$j=$j+1){
 			last;
 		}elsif(@SSstart[$i] <= @BBstart[$j] and @BBstart[$j] <= @SSend[$i] and @SSend[$i] <= @BBend[$j] and @SSsvtype[$I] eq @BBsvtype[$j]){
 			#ACBD
-			$AC=@BBstart[$j] - @SSstart[$i]+1;
-			$CB=@SSend[$i] - @BBstart[$j]+1;
-			$BD=@BBend[$j] - @SSend[$i]+1;
-			$AB=@SSend[$i] - @SSstart[$i]+1;
-			$CD=@BBend[$j] - @BBstart[$j]+1;
+			my $AC=@BBstart[$j] - @SSstart[$i]+1;
+			my $CB=@SSend[$i] - @BBstart[$j]+1;
+			my $BD=@BBend[$j] - @SSend[$i]+1;
+			my $AB=@SSend[$i] - @SSstart[$i]+1;
+			my $CD=@BBend[$j] - @BBstart[$j]+1;
 			if($CB > $filter * $AB and $CB > $filter * $CD){
 				$hash{"@SSid[$i]"}=1;
 			}
 		}elsif(@BBstart[$j] <= @SSstart[$i] and @SSstart[$i] <= @BBend[$j] and @BBend[$j] <= @SSend[$i] and @SSsvtype[$I] eq @BBsvtype[$j]){
 			#CADB
-			$CA=@SSstart[$i] - @BBstart[$j]+1;
-			$AD=@BBend[$j] - @SSstart[$i]+1;
-			$DB=@SSend[$i] - @BBend[$j]+1;
-			$AB=@SSend[$i] - @SSstart[$i]+1;
-			$CD=@BBend[$j] - @BBstart[$j]+1;
+			my $CA=@SSstart[$i] - @BBstart[$j]+1;
+			my $AD=@BBend[$j] - @SSstart[$i]+1;
+			my $DB=@SSend[$i] - @BBend[$j]+1;
+			my $AB=@SSend[$i] - @SSstart[$i]+1;
+			my $CD=@BBend[$j] - @BBstart[$j]+1;
 			if($AD > $filter * $AB and $AD > $filter * $CD){
 				$hash{"@SSid[$i]"}=1;
 			}
 		}elsif(@SSstart[$i] <= @BBstart[$j] and @BBstart[$j] <= @BBend[$j] and @BBend[$j] <= @SSend[$i] and @SSsvtype[$I] eq @BBsvtype[$j]){
 			#ACDB
-			$AC=@BBstart[$j] - @SSstart[$i]+1;
-			$CD=@BBend[$j] - @BBstart[$j]+1;
-			$DB=@SSend[$i] - @BBend[$j]+1;
-			$AB=@SSend[$i] - @SSstart[$i]+1;
+			my $AC=@BBstart[$j] - @SSstart[$i]+1;
+			my $CD=@BBend[$j] - @BBstart[$j]+1;
+			my $DB=@SSend[$i] - @BBend[$j]+1;
+			my $AB=@SSend[$i] - @SSstart[$i]+1;
 			if($CD > $filter * $AB){
 				$hash{"@SSid[$i]"}=1;
 			}
 		}elsif(@BBstart[$j] <= @SSstart[$i] and @SSstart[$i] <= @SSend[$i] and @SSend[$i] <= @BBend[$j] and @SSsvtype[$I] eq @BBsvtype[$j]){
 			#CABD
-			$CA=@SSstart[$i] - @BBstart[$j]+1;
-			$AB=@SSend[$i] - @SSstart[$i]+1;
-			$BD=@BBend[$j] - @SSend[$i]+1;
-			$CD=@BBend[$j] - @BBstart[$j]+1;
+			my $CA=@SSstart[$i] - @BBstart[$j]+1;
+			my $AB=@SSend[$i] - @SSstart[$i]+1;
+			my $BD=@BBend[$j] - @SSend[$i]+1;
+			my $CD=@BBend[$j] - @BBstart[$j]+1;
 			if($AB > $filter * $CD){
 				$hash{"@SSid[$i]"}=1;
 			}

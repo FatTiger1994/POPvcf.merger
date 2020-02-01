@@ -5,7 +5,7 @@ FLAG_LOC=0
 
 if [ x$1 != x ]
 then
-	while getopts "i:" arg #选项后面的冒号表示该选项需要参数
+	while getopts "i:s:" arg #选项后面的冒号表示该选项需要参数
 	do
 		case $arg in
 		i)
