@@ -13,7 +13,7 @@ my $filter=0.5
 
 open(INFILE,"$ARGV[0]"); #bigblock
 while(<INFILE>){
-	#push @BBchr,(split /\t/)[0];
+	push @BBchr,(split /\t/)[0];
 	push @BBstart,(split /\t/)[1];
 	push @BBend,(split /\t/)[2];
 	push @BBsvtype,(split /\t/)[3];
@@ -91,5 +91,10 @@ for(my $j=0;$j<@BBstart;$j=$j+1){
 			}
 		}
 	}
+	print OUT @BBchr[$j]."\t".@BBstart[$j]."\t".@BBend[$j]."\t".@BBsvtype[$j];
+	for (my $index=0;$index<@sampleid;$index++){
+		print OUT "\t".$hash{"@sampleid[$index]"};
+	}
+	print OUT "\n";
 }
 close (OUT);
