@@ -91,5 +91,5 @@ else
 	POPvcf.merger.sh [-v ] [-s ]
 	-v dir of vcf_list (one column, list of vcf files, should be named vcf_list.txt)
 	-s dir of sample_list (one column, sampleid)
-	example: POPvcf.merger.sh -v /picb/humpopg-bigdata5/wangyimin/NGS/svmap/test/vcf_list.txt -s /picb/humpopg-bigdata5/wangyimin/NGS/svmap/test/sample.list"
+	example: POPvcf.merger.sh -v /picb/humpopg-bigdata5/wangyimin/NGS/svmap/KGP_HighCov/20190628_WashU_Manta/vcf.list -s /picb/humpopg-bigdata5/wangyimin/NGS/svmap/KGP_HighCov/20190628_WashU_Manta/sample.list"
 fi

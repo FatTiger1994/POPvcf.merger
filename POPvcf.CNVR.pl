@@ -31,12 +31,18 @@ for($vcf_index=0;$vcf_index<@vcf_list;$vcf_index++){
 	my @array_svtype;
 	my @array_end;
 	my @vcf_file;
-	open(VCFFILE,@vcf_list[$vcf_index]);
+
+	#open(VCFFILE,@vcf_list[$vcf_index]);
+	open(VCFFILE,"gzip -dc @vcf_list[$vcf_index] |") or die ("can not open file!\n");
 	@vcf_file=<VCFFILE>;
 	close VCFFILE;
 	chomp @vcf_file;
 	for($i=0;$i<@vcf_file;$i++){
 		if (@vcf_file[$i] =~ /[#]{1,2}/){
+			next;
+		}elsif(@vcf_file[$i] !~ "SVTYPE="){
+			next;			
+		}elsif(@vcf_file[$i] !~ "END="){
 			next;
 		}else{
 			@splitted_vcf_file=split("\t",@vcf_file[$i]);
@@ -47,7 +53,7 @@ for($vcf_index=0;$vcf_index<@vcf_list;$vcf_index++){
 		}
 	}
 	foreach $string (@array_chr){
-		$string=~ s/(chr)([0-9]{1,2})/$2/;
+		$string=~ s/(chr)([0-9xXyY]{1,2})/$2/;
 	}
 	foreach $string (@array_svtype){
 		$string=~ s/$/;/;
@@ -68,15 +74,20 @@ for($vcf_index=0;$vcf_index<@vcf_list;$vcf_index++){
 	for($array_index=0;$array_index<@array_chr;$array_index++){
 		if(@array_chr[$array_index] ne ${chr}){
 			next;
-		}elsif(@array_chr[$array_index] == ${chr}){
+#		}elsif(@array_chr[$array_index] == ${chr}){
+		}else{
+			if(@array_svtype[$array_index] eq "INS"){
+				@array_start[$array_index] = @array_start[$array_index]-50;
+				@array_end[$array_index] = @array_end[$array_index]+50;
+			}
 			$tmp_singlesv=@sample_list[$vcf_index]."\t".$chr."\t".@array_start[$array_index]."\t".@array_end[$array_index]."\t".@array_svtype[$array_index];
 			push (@infile,$tmp_singlesv);
 			push (@arraya,@array_start[$array_index]);
 			push (@arrayb,@array_end[$array_index]);
 			push (@arraycn,@array_svtype[$array_index]);
-		}else{
-			print "Cannot recognize ".@array_chr[$array_index]."!!!\n";
-			exit (1);
+#		}else{
+#			print "Cannot recognize ".@array_chr[$array_index]."!!!\n";
+#			exit (1);
 		}
 	}
 }
@@ -94,6 +105,7 @@ while(<GAPFILE>){
 }
 close GAPFILE;
 
+open(OUT,">>${out_loc}/cnvr_nogap_chr${chr}.txt");
 #analysis
 for($i=0;$i<@arraya;$i=$i+1){
 	$cal=0;
@@ -142,7 +154,6 @@ for($i=0;$i<@arraya;$i=$i+1){
 			last;
 		}
 	}
-	open(OUT,">>${out_loc}/cnvr_nogap_chr${chr}.txt");
 	if($cal==0){
 		print OUT @infile[$i]."\n";
 	}

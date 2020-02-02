@@ -9,6 +9,7 @@ my @SSid;
 my @SSstart;
 my @SSend;
 my @SSsvtype;
+my @sampleid;
 my %hash;
 my $filter=0.5;
 
@@ -52,7 +53,7 @@ for(my $j=0;$j<@BBstart;$j=$j+1){
 		}elsif(@SSstart[$i] > @BBend[$j]){
 			#CDAB
 			last;
-		}elsif(@SSstart[$i] <= @BBstart[$j] and @BBstart[$j] <= @SSend[$i] and @SSend[$i] <= @BBend[$j] and @SSsvtype[$I] eq @BBsvtype[$j]){
+		}elsif(@SSstart[$i] <= @BBstart[$j] and @BBstart[$j] <= @SSend[$i] and @SSend[$i] <= @BBend[$j] and @SSsvtype[$i] eq @BBsvtype[$j]){
 			#ACBD
 			my $AC=@BBstart[$j] - @SSstart[$i]+1;
 			my $CB=@SSend[$i] - @BBstart[$j]+1;
@@ -62,7 +63,7 @@ for(my $j=0;$j<@BBstart;$j=$j+1){
 			if($CB > $filter * $AB and $CB > $filter * $CD){
 				$hash{"@SSid[$i]"}=1;
 			}
-		}elsif(@BBstart[$j] <= @SSstart[$i] and @SSstart[$i] <= @BBend[$j] and @BBend[$j] <= @SSend[$i] and @SSsvtype[$I] eq @BBsvtype[$j]){
+		}elsif(@BBstart[$j] <= @SSstart[$i] and @SSstart[$i] <= @BBend[$j] and @BBend[$j] <= @SSend[$i] and @SSsvtype[$i] eq @BBsvtype[$j]){
 			#CADB
 			my $CA=@SSstart[$i] - @BBstart[$j]+1;
 			my $AD=@BBend[$j] - @SSstart[$i]+1;
@@ -72,7 +73,7 @@ for(my $j=0;$j<@BBstart;$j=$j+1){
 			if($AD > $filter * $AB and $AD > $filter * $CD){
 				$hash{"@SSid[$i]"}=1;
 			}
-		}elsif(@SSstart[$i] <= @BBstart[$j] and @BBstart[$j] <= @BBend[$j] and @BBend[$j] <= @SSend[$i] and @SSsvtype[$I] eq @BBsvtype[$j]){
+		}elsif(@SSstart[$i] <= @BBstart[$j] and @BBstart[$j] <= @BBend[$j] and @BBend[$j] <= @SSend[$i] and @SSsvtype[$i] eq @BBsvtype[$j]){
 			#ACDB
 			my $AC=@BBstart[$j] - @SSstart[$i]+1;
 			my $CD=@BBend[$j] - @BBstart[$j]+1;
@@ -81,7 +82,7 @@ for(my $j=0;$j<@BBstart;$j=$j+1){
 			if($CD > $filter * $AB){
 				$hash{"@SSid[$i]"}=1;
 			}
-		}elsif(@BBstart[$j] <= @SSstart[$i] and @SSstart[$i] <= @SSend[$i] and @SSend[$i] <= @BBend[$j] and @SSsvtype[$I] eq @BBsvtype[$j]){
+		}elsif(@BBstart[$j] <= @SSstart[$i] and @SSstart[$i] <= @SSend[$i] and @SSend[$i] <= @BBend[$j] and @SSsvtype[$i] eq @BBsvtype[$j]){
 			#CABD
 			my $CA=@SSstart[$i] - @BBstart[$j]+1;
 			my $AB=@SSend[$i] - @SSstart[$i]+1;
