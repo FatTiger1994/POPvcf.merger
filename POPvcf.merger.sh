@@ -46,24 +46,24 @@ then
 
 	CHRs=$(echo {1..22} X Y)
 	
-	mkdir ${WD}/merge 2>/dev/null
-	cd ${WD}/merge
-	echo "Merging CNVR without gap regions..."
-
-	for i in ${CHRs}
-	do
-		# generate cnvr_nogap_chr*.txt
-		${bin}/POPvcf.CNVR.pl ${vcf_list} ${sample_list} ${gap_loc} ${WD}/merge ${i} &
-	done
-
-	wait
-	echo "done!"
-
-	for i in ${CHRs}
-	do
-		echo "merging chr "${i}
-		# cnvr_nogap_chr*.txt ----> cnvr_nogap_chr*_sorted.txt
-		sort -n -k 2 -k 3 -k 4 ${WD}/merge/cnvr_nogap_chr${i}.txt > ${WD}/merge/cnvr_nogap_chr${i}_sorted.txt
+#	mkdir ${WD}/merge 2>/dev/null
+#	cd ${WD}/merge
+#	echo "Merging CNVR without gap regions..."
+#
+#	for i in ${CHRs}
+#	do
+#		# generate cnvr_nogap_chr*.txt
+#		${bin}/POPvcf.CNVR.pl ${vcf_list} ${sample_list} ${gap_loc} ${WD}/merge ${i} &
+#	done
+#
+#	wait
+#	echo "done!"
+#
+#	for i in ${CHRs}
+#	do
+#		echo "merging chr "${i}
+#		# cnvr_nogap_chr*.txt ----> cnvr_nogap_chr*_sorted.txt
+#		sort -n -k 2 -k 3 -k 4 ${WD}/merge/cnvr_nogap_chr${i}.txt > ${WD}/merge/cnvr_nogap_chr${i}_sorted.txt
 		# cnvr_nogap_chr*_sorted.txt ----> cnvr_bigblock_chr*.txt
 		# cnvr_bigblock_chr*.txt ----> cnvr_bigblock_chr*.txt_remerge
 		BE_block_merge $i &
