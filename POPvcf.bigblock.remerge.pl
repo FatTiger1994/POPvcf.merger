@@ -5,6 +5,7 @@ my $overlap_filter=0.5;
 my @array_chr;
 my @bigblock_start;
 my @bigblock_end;
+my @bigblock_svtype;
 my @be_start;
 my @be_end;
 my @be_cn;
@@ -14,8 +15,9 @@ while(<INFILE>){
 	push @array_chr,(split /\t/)[0];
 	push @bigblock_start,(split /\t/)[1];
 	push @bigblock_end,(split /\t/)[2];
+	push @bigblock_svtype,(split /\t/)[3];
 }
-chomp @bigblock_end;
+chomp @bigblock_svtype;
 close INFILE;
 
 my $chr=@array_chr[0];
@@ -39,7 +41,7 @@ for($bigblock_index=0;$bigblock_index<@bigblock_start;$bigblock_index++){
 	my @block_cn;
 	#获取该bigblock内的所有SV，并对所有SV加权为1
 	for($be_index=0;$be_index<@be_start;$be_index++){
-		if(@be_start[$be_index] >= @bigblock_start[$bigblock_index] and @be_end[$be_index] <= @bigblock_end[$bigblock_index]){
+		if(@be_start[$be_index] >= @bigblock_start[$bigblock_index] and @be_end[$be_index] <= @bigblock_end[$bigblock_index] and @be_cn[$be_index] eq @bigblock_svtype[$bigblock_index]){
 			#print OUT @be_id[$be_index]."\t".@be_cn[$be_index]."\t".@be_start[$be_index]."\t".@be_end[$be_index]."\n";
 			push @block_start, @be_start[$be_index];
 			push @block_end, @be_end[$be_index];
