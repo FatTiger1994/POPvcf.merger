@@ -30,6 +30,7 @@ for($vcf_index=0;$vcf_index<@vcf_list;$vcf_index++){
 	my @array_start;
 	my @array_svtype;
 	my @array_end;
+	my @array_GT;
 	my @vcf_file;
 
 	#open(VCFFILE,@vcf_list[$vcf_index]);
@@ -50,6 +51,7 @@ for($vcf_index=0;$vcf_index<@vcf_list;$vcf_index++){
 			push (@array_start,@splitted_vcf_file[1]);
 			push (@array_svtype,@splitted_vcf_file[7]);
 			push (@array_end,@splitted_vcf_file[7]);
+			push (@array_GT,@splitted_vcf_file[9]);
 		}
 	}
 	foreach $string (@array_chr){
@@ -62,6 +64,10 @@ for($vcf_index=0;$vcf_index<@vcf_list;$vcf_index++){
 	foreach $string (@array_end){
 		$string=~ s/^/;/;
 		$string=~ s/(.*;END=)([0-9]{3,9})(;.*)/$2/;
+	}
+	foreach $string (@array_GT){
+		$string=~ s/^/;/;
+		$string=~ s/(;)([0-9\/]{1,3})(:.*)/$2/;
 	}
 	#foreach $string (@array_svtype){
 	#	$string=~ s/DEL/-1/;
@@ -80,7 +86,7 @@ for($vcf_index=0;$vcf_index<@vcf_list;$vcf_index++){
 				@array_start[$array_index] = @array_start[$array_index]-50;
 				@array_end[$array_index] = @array_end[$array_index]+50;
 			}
-			$tmp_singlesv=@sample_list[$vcf_index]."\t".$chr."\t".@array_start[$array_index]."\t".@array_end[$array_index]."\t".@array_svtype[$array_index];
+			$tmp_singlesv=@sample_list[$vcf_index]."\t".$chr."\t".@array_start[$array_index]."\t".@array_end[$array_index]."\t".@array_svtype[$array_index]."\t".@array_GT;
 			push (@infile,$tmp_singlesv);
 			push (@arraya,@array_start[$array_index]);
 			push (@arrayb,@array_end[$array_index]);

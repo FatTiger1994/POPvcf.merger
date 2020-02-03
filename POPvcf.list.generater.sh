@@ -9,12 +9,14 @@ then
 	do
 		case $arg in
 		i)
-			echo "input file's location:$OPTARG" #参数存在$OPTARG中
+			echo "	input file's location:
+			$OPTARG" #参数存在$OPTARG中
 			TAG_LOC=$OPTARG
 			FLAG_LOC=1
 			;;
 		s)
-			echo "suffix:$OPTARG"
+			echo "	suffix:
+			$OPTARG"
 			TAG_SUF=$OPTARG
 			;;
 		?)  #当有不认识的选项的时候arg为?

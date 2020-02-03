@@ -71,6 +71,7 @@ then
 
 	wait
 	echo "done!"
+	cd ${WD}
 
 	for i in ${CHRs}
 	do
