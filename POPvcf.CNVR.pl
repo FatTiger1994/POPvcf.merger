@@ -82,6 +82,8 @@ for($vcf_index=0;$vcf_index<@vcf_list;$vcf_index++){
 			next;
 		}elsif(@array_svtype[$array_index] ne "DEL" and @array_svtype[$array_index] ne "DUP" and @array_svtype[$array_index] ne "INS" and @array_svtype[$array_index] ne "INV" and @array_svtype[$array_index] ne "CNV"){
 			next;
+		}elsif((@array_end[$array_index] - @array_start[$array_index]) > 10000){
+			next;
 		}else{
 			if(@array_svtype[$array_index] eq "INS"){
 				@array_start[$array_index] = @array_start[$array_index]-50;

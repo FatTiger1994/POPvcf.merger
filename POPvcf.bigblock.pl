@@ -15,6 +15,7 @@ chomp @svtype;
 my $chrom=@chr[1];
 my @block_start;
 my @block_end;
+my @block_svtype;
 
 my $tmp_start=@start[0];
 my $tmp_end=@end[0];
@@ -39,6 +40,6 @@ push (@block_svtype,$tmp_svtype);
 
 open(OUT,">>$ARGV[1]/cnvr_bigblock_chr$chrom.txt");
 for($j=0;$j<@block_start;$j=$j+1){
-	print OUT $chrom."\t".@block_start[$j]."\t".@block_end[$j]."\t".@block_svtype."\n";
+	print OUT $chrom."\t".@block_start[$j]."\t".@block_end[$j]."\t".@block_svtype[$j]."\n";
 }
 close (OUT);
