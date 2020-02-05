@@ -20,7 +20,7 @@ filter=0.5
 
 if [ x$1 != x ]
 then
-	while getopts "v:s:r:" arg #选项后面的冒号表示该选项需要参数
+	while getopts "v:s:g" arg #选项后面的冒号表示该选项需要参数
 	do
 		case $arg in
 		v)
@@ -30,6 +30,10 @@ then
 		s)
 			sample_list=$OPTARG
 			FLAG_sample_list=1
+			;;
+		g)
+			genotype=1
+			echo "Input files have genotype infomation..."
 			;;
 		?)  #当有不认识的选项的时候arg为?
 			echo "FAIL: Unknown argument. Please check again."
@@ -76,7 +80,12 @@ then
 	for i in ${CHRs}
 	do
 		sort -n -k 1 -k 2 -k 3 ${WD}/merge/cnvr_bigblock_chr${i}.txt_remerge > ${WD}/merge/cnvr.bigblock.chr${i}.remerge.sorted
-		${bin}/POPvcf.summary.pl ${WD}/merge/cnvr.bigblock.chr${i}.remerge.sorted cnvr_nogap_chr${i}_sorted.txt ${sample_list}
+		if [ $genotype -eq 1 ]
+		then
+			${bin}/POPvcf.summary.withGT.pl ${WD}/merge/cnvr.bigblock.chr${i}.remerge.sorted cnvr_nogap_chr${i}_sorted.txt ${sample_list}
+		else
+			${bin}/POPvcf.summary.pl ${WD}/merge/cnvr.bigblock.chr${i}.remerge.sorted cnvr_nogap_chr${i}_sorted.txt ${sample_list}
+		fi
 	done
 
 	#cat ${WD}/merged_genotype_list | cut -f 1,2,3 | sed 's/^23/X/g' | sed 's/^24/Y/g' > ${WD}/output/CNVR.txt
