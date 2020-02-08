@@ -76,6 +76,8 @@ then
 	wait
 	echo "done!"
 	cd ${WD}
+	echo "#CHR\tstart\tend\tsvtype\t" > out.vcf
+	cat ${sample_list} | sed ":a;N;s/\n/\t/g;ta" >> out.vcf
 
 	for i in ${CHRs}
 	do
@@ -101,5 +103,6 @@ else
 	POPvcf.merger.sh [-v ] [-s ]
 	-v dir of vcf_list (one column, list of vcf files, should be named vcf_list.txt)
 	-s dir of sample_list (one column, sampleid)
-	example: POPvcf.merger.sh -v /picb/humpopg-bigdata5/wangyimin/NGS/svmap/KGP_HighCov/20190628_WashU_Manta/vcf.list -s /picb/humpopg-bigdata5/wangyimin/NGS/svmap/KGP_HighCov/20190628_WashU_Manta/sample.list"
+	-g use -g if genotype is offered
+	example: POPvcf.merger.sh -v /picb/humpopg-bigdata5/wangyimin/NGS/svmap/KGP_HighCov/20190628_WashU_Manta/vcf.list -s /picb/humpopg-bigdata5/wangyimin/NGS/svmap/KGP_HighCov/20190628_WashU_Manta/sample.list -g"
 fi

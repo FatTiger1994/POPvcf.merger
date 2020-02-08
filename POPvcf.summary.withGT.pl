@@ -49,49 +49,53 @@ for(my $j=0;$j<@BBstart;$j=$j+1){
 		$hash{"@sampleid[$index]"}="0/0";
 	}
 	for(my $i=0;$i<@SSstart;$i=$i+1){
-		if(@SSend[$i] < @BBstart[$j]){
-			#ABCD
+		if(@SSsvtype[$i] ne @BBsvtype[$j]){
 			next;
-		}elsif(@SSstart[$i] > @BBend[$j]){
-			#CDAB
-			last;
-		}elsif(@SSstart[$i] <= @BBstart[$j] and @BBstart[$j] <= @SSend[$i] and @SSend[$i] <= @BBend[$j] and @SSsvtype[$i] eq @BBsvtype[$j]){
-			#ACBD
-			my $AC=@BBstart[$j] - @SSstart[$i]+1;
-			my $CB=@SSend[$i] - @BBstart[$j]+1;
-			my $BD=@BBend[$j] - @SSend[$i]+1;
-			my $AB=@SSend[$i] - @SSstart[$i]+1;
-			my $CD=@BBend[$j] - @BBstart[$j]+1;
-			if($CB > $filter * $AB and $CB > $filter * $CD){
-				$hash{"@SSid[$i]"}=@SSGT[$i];
-			}
-		}elsif(@BBstart[$j] <= @SSstart[$i] and @SSstart[$i] <= @BBend[$j] and @BBend[$j] <= @SSend[$i] and @SSsvtype[$i] eq @BBsvtype[$j]){
-			#CADB
-			my $CA=@SSstart[$i] - @BBstart[$j]+1;
-			my $AD=@BBend[$j] - @SSstart[$i]+1;
-			my $DB=@SSend[$i] - @BBend[$j]+1;
-			my $AB=@SSend[$i] - @SSstart[$i]+1;
-			my $CD=@BBend[$j] - @BBstart[$j]+1;
-			if($AD > $filter * $AB and $AD > $filter * $CD){
-				$hash{"@SSid[$i]"}=@SSGT[$i];
-			}
-		}elsif(@SSstart[$i] <= @BBstart[$j] and @BBstart[$j] <= @BBend[$j] and @BBend[$j] <= @SSend[$i] and @SSsvtype[$i] eq @BBsvtype[$j]){
-			#ACDB
-			my $AC=@BBstart[$j] - @SSstart[$i]+1;
-			my $CD=@BBend[$j] - @BBstart[$j]+1;
-			my $DB=@SSend[$i] - @BBend[$j]+1;
-			my $AB=@SSend[$i] - @SSstart[$i]+1;
-			if($CD > $filter * $AB){
-				$hash{"@SSid[$i]"}=@SSGT[$i];
-			}
-		}elsif(@BBstart[$j] <= @SSstart[$i] and @SSstart[$i] <= @SSend[$i] and @SSend[$i] <= @BBend[$j] and @SSsvtype[$i] eq @BBsvtype[$j]){
-			#CABD
-			my $CA=@SSstart[$i] - @BBstart[$j]+1;
-			my $AB=@SSend[$i] - @SSstart[$i]+1;
-			my $BD=@BBend[$j] - @SSend[$i]+1;
-			my $CD=@BBend[$j] - @BBstart[$j]+1;
-			if($AB > $filter * $CD){
-				$hash{"@SSid[$i]"}=@SSGT[$i];
+		}else{
+			if(@SSend[$i] < @BBstart[$j]){
+				#ABCD
+				next;
+			}elsif(@SSstart[$i] > @BBend[$j]){
+				#CDAB
+				last;
+			}elsif(@SSstart[$i] <= @BBstart[$j] and @BBstart[$j] <= @SSend[$i] and @SSend[$i] <= @BBend[$j]){
+				#ACBD
+				my $AC=@BBstart[$j] - @SSstart[$i]+1;
+				my $CB=@SSend[$i] - @BBstart[$j]+1;
+				my $BD=@BBend[$j] - @SSend[$i]+1;
+				my $AB=@SSend[$i] - @SSstart[$i]+1;
+				my $CD=@BBend[$j] - @BBstart[$j]+1;
+				if($CB > $filter * $AB and $CB > $filter * $CD){
+					$hash{"@SSid[$i]"}=@SSGT[$i];
+				}
+			}elsif(@BBstart[$j] <= @SSstart[$i] and @SSstart[$i] <= @BBend[$j] and @BBend[$j] <= @SSend[$i]){
+				#CADB
+				my $CA=@SSstart[$i] - @BBstart[$j]+1;
+				my $AD=@BBend[$j] - @SSstart[$i]+1;
+				my $DB=@SSend[$i] - @BBend[$j]+1;
+				my $AB=@SSend[$i] - @SSstart[$i]+1;
+				my $CD=@BBend[$j] - @BBstart[$j]+1;
+				if($AD > $filter * $AB and $AD > $filter * $CD){
+					$hash{"@SSid[$i]"}=@SSGT[$i];
+				}
+			}elsif(@SSstart[$i] <= @BBstart[$j] and @BBstart[$j] <= @BBend[$j] and @BBend[$j] <= @SSend[$i]){
+				#ACDB
+				my $AC=@BBstart[$j] - @SSstart[$i]+1;
+				my $CD=@BBend[$j] - @BBstart[$j]+1;
+				my $DB=@SSend[$i] - @BBend[$j]+1;
+				my $AB=@SSend[$i] - @SSstart[$i]+1;
+				if($CD > $filter * $AB){
+					$hash{"@SSid[$i]"}=@SSGT[$i];
+				}
+			}elsif(@BBstart[$j] <= @SSstart[$i] and @SSstart[$i] <= @SSend[$i] and @SSend[$i] <= @BBend[$j]){
+				#CABD
+				my $CA=@SSstart[$i] - @BBstart[$j]+1;
+				my $AB=@SSend[$i] - @SSstart[$i]+1;
+				my $BD=@BBend[$j] - @SSend[$i]+1;
+				my $CD=@BBend[$j] - @BBstart[$j]+1;
+				if($AB > $filter * $CD){
+					$hash{"@SSid[$i]"}=@SSGT[$i];
+				}
 			}
 		}
 	}

@@ -32,7 +32,7 @@ while(<INFILE>){
 	push @SSsvtype,(split /\t/)[4];
 	#push @SSGT,(split /\t/)[5];
 }
-#chomp @SSGT;
+chomp @SSsvtype;
 close INFILE;
 
 open(INFILE,"$ARGV[2]"); #sample list
