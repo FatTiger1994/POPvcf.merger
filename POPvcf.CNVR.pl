@@ -89,11 +89,11 @@ for($vcf_index=0;$vcf_index<@vcf_list;$vcf_index++){
 				@array_start[$array_index] = @array_start[$array_index]-50;
 				@array_end[$array_index] = @array_end[$array_index]+50;
 			}
-			$tmp_singlesv=@sample_list[$vcf_index]."\t".$chr."\t".@array_start[$array_index]."\t".@array_end[$array_index]."\t".@array_svtype[$array_index];
+			$tmp_singlesv=@sample_list[$vcf_index]."\t".$chr."\t".@array_start[$array_index]."\t".@array_end[$array_index]."\t".@array_svtype[$array_index]."\t".@array_GT;
 			push (@infile,$tmp_singlesv);
 			push (@arraya,@array_start[$array_index]);
 			push (@arrayb,@array_end[$array_index]);
-			push (@arraycn,@array_svtype[$array_index]);
+			#push (@arraycn,@array_svtype[$array_index]);
 #		}else{
 #			print "Cannot recognize ".@array_chr[$array_index]."!!!\n";
 #			exit (1);

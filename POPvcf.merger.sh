@@ -1,4 +1,4 @@
-#!/bin/bash
+w#!/bin/bash
 
 WD=`pwd`
 bin="/picb/humpopg-bigdata5/wangyimin/scripts/POPvcf.merger"
