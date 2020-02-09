@@ -76,17 +76,19 @@ then
 	wait
 	echo "done!"
 	cd ${WD}
-	echo "#CHR\tstart\tend\tsvtype\t" > out.vcf
-	cat ${sample_list} | sed ":a;N;s/\n/\t/g;ta" >> out.vcf
+	echo "#CHR	start	end	svtype" > out.vcf.tmp
+	cat ${sample_list} >> out.vcf.tmp
+	cat out.vcf.tmp | sed ":a;N;s/\n/\t/g;ta" >> out.vcf
+	rm out.vcf.tmp
 
 	for i in ${CHRs}
 	do
 		sort -n -k 1 -k 2 -k 3 ${WD}/merge/cnvr_bigblock_chr${i}.txt_remerge > ${WD}/merge/cnvr.bigblock.chr${i}.remerge.sorted
 		if [ $genotype -eq 1 ]
 		then
-			${bin}/POPvcf.summary.withGT.pl ${WD}/merge/cnvr.bigblock.chr${i}.remerge.sorted cnvr_nogap_chr${i}_sorted.txt ${sample_list}
+			${bin}/POPvcf.summary.withGT.pl ${WD}/merge/cnvr.bigblock.chr${i}.remerge.sorted ${WD}/merge/cnvr_nogap_chr${i}_sorted.txt ${sample_list}
 		else
-			${bin}/POPvcf.summary.pl ${WD}/merge/cnvr.bigblock.chr${i}.remerge.sorted cnvr_nogap_chr${i}_sorted.txt ${sample_list}
+			${bin}/POPvcf.summary.pl ${WD}/merge/cnvr.bigblock.chr${i}.remerge.sorted ${WD}/merge/cnvr_nogap_chr${i}_sorted.txt ${sample_list}
 		fi
 	done
 
